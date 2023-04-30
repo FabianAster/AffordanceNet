@@ -43,11 +43,11 @@ class pascal_voc(imdb):
 
 		## IIT & UMD Dataset
         # self._classes = ('__background__', 'bowl', 'tvm', 'pan', 'hammer', 'knife', 'cup', 'drill', 'racket', 'spatula', 'bottle') if dataset == 'iit' else ('__background__', 'objectness')
-        self._classes = ('__background__', 'bowl', 'tvm', 'pan', 'hammer', 'knife', 'cup', 'drill', 'racket', 'spatula', 'bottle') \
-            if dataset == 'iit' else ('__background__', 'knife', 'saw', 'scissors', 'shears', 'scoop', 'spoon', 'trowel', 'bowl', 'cup', 'ladle', 'mug', 'pot', 'shovel', 'turner', 'hammer', 'mallet', 'tenderizer')
+        self._classes = ('__background__', 'f20_20_g', 'm20', 'm20_100', 'm30', 's40_40_g', 'allenkey', 'bearing2', 'housing', 'wrench') \
+            if dataset == 'iit' else ('__background__', 'f20_20_g', 'm20', 'm20_100', 'm30', 's40_40_g', 'allenkey', 'bearing2', 'housing', 'wrench')
 
         self._class_to_ind = dict(zip(self.classes, range(self.num_classes)))
-        self._image_ext = '.jpg'
+        self._image_ext = '.png'
         self._image_index = self._load_image_set_index()
         # Default to roidb handler
         self._roidb_handler = self.selective_search_roidb
@@ -232,7 +232,9 @@ class pascal_voc(imdb):
 
         # Load object bounding boxes into a data frame.
         for ix, obj in enumerate(objs):
+            print(obj)
             bbox = obj.find('bndbox')
+            print(bbox)
             # Make pixel indexes 0-based
             # x1 = float(bbox.find('xmin').text) - 1
             # y1 = float(bbox.find('ymin').text) - 1

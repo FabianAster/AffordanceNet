@@ -1,0 +1,2 @@
+model_checkpoint_path: "affordancenet_newtest"
+all_model_checkpoint_paths: "affordancenet_newtest"

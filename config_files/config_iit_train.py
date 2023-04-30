@@ -6,6 +6,7 @@ class ConfigIitTrain(Config):
 
     # Paths to files
     FILES_NAME = "affordancenet_new"
+    WEIGHTS_FILE = "affordancenet_new"
 
     CHECKPOINT_DIR = os.path.join(Config.ROOT_DIR, "checkpoints", FILES_NAME, "ckpt")
     LOG_DIR = os.path.join(Config.ROOT_DIR, "logs", FILES_NAME)
@@ -14,9 +15,9 @@ class ConfigIitTrain(Config):
 
     # General configuration
     IMDB_NAME = "voc_2012_train_iit"        # Available: voc_2012_train_iit, voc_2012_test_iit, voc_2012_train_umd, voc_2012_test_umd
-    NUM_CLASSES = 11                        # Available: 11 for IIT, 2 for UMD
+    NUM_CLASSES = 9                        # Available: 11 for IIT, 2 for UMD
     NUM_AFFORDANCE_CLASSES = 10             # Available: 10 for IIT, 8 for UMD
     AFFORDANCE_LABELS = ["background", "contain", "cut", "display", "engine", "grasp", "hit", "pound", "support", "w-grasp"]
 
-    EPOCHS = 33             # 25+8
-    USE_FLIPPED = True      # Add flipped images for training only
+    EPOCHS = 1             # 25+8
+    USE_FLIPPED = False      # Add flipped images for training only

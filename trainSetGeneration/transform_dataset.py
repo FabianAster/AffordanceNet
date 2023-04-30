@@ -13,7 +13,6 @@ counter = 0
 for filename in filenames:
   if len(filename) < 16 and "mask" in filename:
     file_counter = int(filename[:-9])
-    print(file_counter)
 
     # open the input image
     input_image = Image.open(src_dir+"/"+str(file_counter)+ "_mask.png")
@@ -33,7 +32,6 @@ for filename in filenames:
             # get the color value for the current pixel
             color = pixels[x, y]
             if(not color == (0,0,0)):
-              print(color)
               
               # if an output image for this color value doesn't exist yet, create it
               if color not in output_images:
@@ -46,4 +44,8 @@ for filename in filenames:
     counter = 0
     for color, image in output_images.items():
         counter += 1
+        if(counter == 5):
+          print(counter)
+          print(file_counter)
         image.save(dest_dir+"/"+str(file_counter)+"_"+str(counter)+"_segmask.png")
+

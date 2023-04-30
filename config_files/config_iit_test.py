@@ -12,8 +12,8 @@ class ConfigIitTest(Config):
     WEIGHTS_FILE = os.path.join(Config.ROOT_DIR, "weights", FILES_NAME+".hdf5")
 
     # General configuration
-    IMDB_NAME = "voc_2012_test_iit"         # Available: voc_2012_train_iit, voc_2012_test_iit, voc_2012_train_umd, voc_2012_test_umd
-    NUM_CLASSES = 11                        # Available: 11 IIT dataset,
+    IMDB_NAME = "voc_2012_train_iit"         # Available: voc_2012_train_iit, voc_2012_test_iit, voc_2012_train_umd, voc_2012_test_umd
+    NUM_CLASSES = 9                        # Available: 11 IIT dataset,
     NUM_AFFORDANCE_CLASSES = 10             # Available: 10 IIT dataset,
     AFFORDANCE_LABELS = ["background", "contain", "cut", "display", "engine", "grasp", "hit", "pound", "support", "w-grasp"]
 

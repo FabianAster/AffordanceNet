@@ -43,8 +43,8 @@ class pascal_voc(imdb):
 
 		## IIT & UMD Dataset
         # self._classes = ('__background__', 'bowl', 'tvm', 'pan', 'hammer', 'knife', 'cup', 'drill', 'racket', 'spatula', 'bottle') if dataset == 'iit' else ('__background__', 'objectness')
-        self._classes = ('__background__', 'f20_20_g', 'm20', 'm20_100', 'm30', 's40_40_g', 'allenkey', 'bearing2', 'housing', 'wrench') \
-            if dataset == 'iit' else ('__background__', 'f20_20_g', 'm20', 'm20_100', 'm30', 's40_40_g', 'allenkey', 'bearing2', 'housing', 'wrench')
+        self._classes = ('__background__', 'bowl', 'tvm', 'pan', 'hammer', 'knife', 'cup', 'drill', 'racket', 'spatula', 'bottle') \
+                    if dataset == 'iit' else ('__background__', 'knife', 'saw', 'scissors', 'shears', 'scoop', 'spoon', 'trowel', 'bowl', 'cup', 'ladle', 'mug', 'pot', 'shovel', 'turner', 'hammer', 'mallet', 'tenderizer')
 
         self._class_to_ind = dict(zip(self.classes, range(self.num_classes)))
         self._image_ext = '.png'

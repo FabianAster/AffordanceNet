@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from os import walk
 
-object_dict = {0: "F20_20_G", 1: "M20", 2: "M20_100", 3: "M30", 4: "S40_40_G", 5: "AllenKey", 6: "Bearing2", 7: "Housing", 8: "Wrench"}
+object_dict = {0: "bowl", 1: "tvm", 2: "pan", 3: "hammer", 4: "knife", 5: "cup", 6: "drill", 7: "racket", 8: "spatula"}
 
 def transform_to_xml(filename, src_dir, dest_dir):
     # Open the input file for reading

@@ -6,7 +6,7 @@ class ConfigIitTrain(Config):
 
     # Paths to files
     FILES_NAME = "affordancenet_new"
-    WEIGHTS_FILE = "affordancenet_new"
+    WEIGHTS_FILE = os.path.join(Config.ROOT_DIR, "weights", FILES_NAME+".hdf5")
 
     CHECKPOINT_DIR = os.path.join(Config.ROOT_DIR, "checkpoints", FILES_NAME, "ckpt")
     LOG_DIR = os.path.join(Config.ROOT_DIR, "logs", FILES_NAME)

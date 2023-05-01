@@ -10,9 +10,9 @@ def transform_to_xml(filename, src_dir, dest_dir):
         # Create the root element of the XML tree
         root = ET.Element('annotation')
         folder = ET.SubElement(root, 'folder')
-        folder.text = "IIT0217"
+        folder.text = "IIT2017"
         filename_elem = ET.SubElement(root, 'filename')
-        filename_elem.text = filename
+        filename_elem.text = filename[:-4] + ".jpg"
         size = ET.SubElement(root, 'size')
         width = ET.SubElement(size, 'width')
         width.text = "480"
@@ -32,7 +32,7 @@ def transform_to_xml(filename, src_dir, dest_dir):
             pose = ET.SubElement(object, 'pose')
             pose.text = "Unspecified"
 
-            truncated = ET.SubElement(object, 'pose')
+            truncated = ET.SubElement(object, 'truncated')
             truncated.text = "0"
 
             difficult = ET.SubElement(object, 'difficult')
@@ -48,16 +48,18 @@ def transform_to_xml(filename, src_dir, dest_dir):
             bndbox = ET.SubElement(object, 'bndbox')
 
             xmin = ET.SubElement(bndbox, 'xmin')
-            xmin.text = str(right)
+            xmin.text = str(min(left, right))
 
             ymin = ET.SubElement(bndbox, 'ymin')
-            ymin.text = str(top)
+            ymin.text = str(min(bottom, top))
 
             xmax = ET.SubElement(bndbox, 'xmax')
-            xmax.text = str(left)
+            xmax.text = str(max(right, left))
 
             ymax = ET.SubElement(bndbox, 'ymax')
-            ymax.text = str(bottom)
+            ymax.text = str(max(top, bottom))
+
+
 
 
     # Write the XML tree to a file
@@ -68,7 +70,7 @@ def transform_to_xml(filename, src_dir, dest_dir):
   
 if __name__ == '__main__':
     src_dir = '/home/fabian/31_TrainingImages/training_set/labels'
-    dest_dir = '/home/fabian/31_TrainingImages/data/VOCdevkit2012/VOC2012/Annotations'
+    dest_dir = '/home/fabian/github/data/VOCdevkit2012/VOC2012/Annotations'
 
 
     filenames = next(walk(src_dir), (None, None, []))[2]  # [] if no file

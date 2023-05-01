@@ -133,7 +133,7 @@ if __name__ == '__main__':
                     callbacks=[checkpoint_callback, tensorboard_callback])
 
     # Save weigths at the end
-    frcnn_model.save_weights(cfg.WEIGHTS_FILE + "test")
+    frcnn_model.save_weights(cfg.WEIGHTS_FILE)
 
     # # Define our metrics for TensorBoard
     # train_loss = tf.keras.metrics.Mean('train_loss', dtype=tf.float32)

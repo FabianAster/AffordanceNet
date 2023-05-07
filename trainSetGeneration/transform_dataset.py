@@ -4,7 +4,7 @@ from os import walk
 import shutil
 
 src_dir = "/home/fabian/31_TrainingImages/training_set/imgs"
-dest_dir = "/home/fabian/31_TrainingImages/training_set/masks"
+dest_dir = "/home/fabian/github/data/cache/GTsegmask_VOC_2012_train_images"
 
 
 filenames = next(walk(src_dir), (None, None, []))[2]  # [] if no file
@@ -40,7 +40,7 @@ for filename in filenames:
                   output_images[color] = Image.new("L", (width, height), color=0)
               
               # set the pixel in the output image for this color value
-              output_images[color].putpixel((x, y), 5)
+              output_images[color].putpixel((x, y), 1)
 
     # save each output image
     counter = 0

@@ -15,8 +15,8 @@ class ConfigIitTrain(Config):
     # General configuration
     IMDB_NAME = "voc_2012_train_iit"        # Available: voc_2012_train_iit, voc_2012_test_iit, voc_2012_train_umd, voc_2012_test_umd
     NUM_CLASSES = 11                        # Available: 11 for IIT, 2 for UMD
-    NUM_AFFORDANCE_CLASSES = 10             # Available: 10 for IIT, 8 for UMD
-    AFFORDANCE_LABELS = ["background", "contain", "cut", "display", "engine", "grasp", "hit", "pound", "support", "w-grasp"]
+    NUM_AFFORDANCE_CLASSES = 2             # Available: 10 for IIT, 8 for UMD
+    AFFORDANCE_LABELS = ["background", "grasp"]
 
-    EPOCHS = 33             # 25+8
-    USE_FLIPPED = True      # Add flipped images for training only
+    EPOCHS = 2             # 25+8
+    USE_FLIPPED = False      # Add flipped images for training only

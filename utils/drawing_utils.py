@@ -176,6 +176,7 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
         if use_masks:
             mask = pred_masks[index]
             # Calculate max index for each position in the mask -> calculate affordance label
+            tf.print(mask[:,:,5], summarize=-1)
             mask = np.argmax(mask, axis=2)
 
             # calculate distinct affordances avoiding 0

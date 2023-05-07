@@ -52,6 +52,17 @@ def load_imgs_and_masks(obj_json):
     obj_json['image'] = img
     return obj_json
 
+def add_sample_weights(image, label):
+    # The weights for each class, with the constraint that:
+    #     sum(class_weights) == 1.0
+    class_weights = tf.constant([2.0, 2.0, 1.0])
+    class_weights = class_weights/tf.reduce_sum(class_weights)
+
+    # Create an image of `sample_weights` by using the label at each pixel as an 
+    # index into the `class weights` .
+    sample_weights = tf.gather(class_weights, indices=tf.cast(label, tf.int32))
+
+    return image, label, sample_weights
 
 if __name__ == '__main__':
     keras.backend.clear_session()

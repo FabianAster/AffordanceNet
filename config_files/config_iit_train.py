@@ -18,5 +18,5 @@ class ConfigIitTrain(Config):
     NUM_AFFORDANCE_CLASSES = 2             # Available: 10 for IIT, 8 for UMD
     AFFORDANCE_LABELS = ["background", "grasp"]
 
-    EPOCHS = 2             # 25+8
+    EPOCHS = 4             # 25+8
     USE_FLIPPED = False      # Add flipped images for training only

@@ -14,8 +14,8 @@ class ConfigIitTest(Config):
     # General configuration
     IMDB_NAME = "voc_2012_test_iit"         # Available: voc_2012_train_iit, voc_2012_test_iit, voc_2012_train_umd, voc_2012_test_umd
     NUM_CLASSES = 11                        # Available: 11 IIT dataset,
-    NUM_AFFORDANCE_CLASSES = 10             # Available: 10 IIT dataset,
-    AFFORDANCE_LABELS = ["background", "contain", "cut", "display", "engine", "grasp", "hit", "pound", "support", "w-grasp"]
+    NUM_AFFORDANCE_CLASSES = 2             # Available: 10 IIT dataset,
+    AFFORDANCE_LABELS = ["background", "grasp"]
 
     EVALUATE = True
     VISUALIZE = True

@@ -16,8 +16,8 @@ pound = [255, 204, 229, 200]
 support = [102, 51, 0, 200]
 w_grasp = [255, 255, 51, 100]
 scoop = [255, 120, 0, 100]
-label_colors_iit = np.array([background, contain, cut, display, engine, grasp, hit, pound, support, w_grasp])
-label_colors_umd = np.array([background, grasp, cut, scoop, contain, pound, support, w_grasp])
+label_colors_iit = np.array([background, grasp])
+label_colors_umd = np.array([background, grasp])
 
 
 def draw_grid_map(img, grid_map, stride):
@@ -176,7 +176,7 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
         if use_masks:
             mask = pred_masks[index]
             # Calculate max index for each position in the mask -> calculate affordance label
-            tf.print(mask[:,:,5], summarize=-1)
+            tf.print(mask[:,:,1], summarize=-1)
             mask = np.argmax(mask, axis=2)
 
             # calculate distinct affordances avoiding 0

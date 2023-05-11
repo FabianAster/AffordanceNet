@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from utils import bbox_utils
 import numpy as np
 import cv2
+import plotly.graph_objs as go
 
 background = [200, 222, 250, 0]
 contain = [255, 0, 0, 100]
@@ -176,7 +177,30 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
         if use_masks:
             mask = pred_masks[index]
             # Calculate max index for each position in the mask -> calculate affordance label
-            tf.print(mask[:,:,1], summarize=-1)
+            tf.print(mask.shape, summarize=-1)
+            mask_np = mask.numpy()
+            line1 = mask_np[:, :, 0]
+            line2 = mask_np[:, :, 1]
+
+            trace1 = go.Scatter(
+                x=np.arange(224),
+                y=line1.ravel(),
+                name='Line 1'
+            )
+            trace2 = go.Scatter(
+                x=np.arange(224),
+                y=line2.ravel(),
+                name='Line 2'
+            )
+
+            layout = go.Layout(
+                title='Two Lines Plot',
+                xaxis=dict(title='X Axis'),
+                yaxis=dict(title='Y Axis', type='log'),
+            )
+
+            fig = go.Figure(data=[trace1, trace2], layout=layout)
+            fig.write_image("plot.png")
             mask = np.argmax(mask, axis=2)
 
             # calculate distinct affordances avoiding 0

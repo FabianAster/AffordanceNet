@@ -453,7 +453,7 @@ def affordance_mask_loss(*args):
     """
     target_mask, pred_mask_prob = args if len(args) == 2 else args[0]
 
-    array = [1, 1, 1, 1, 1, 0.1, 1, 1, 1, 1]
+    array = [1, 1, 1, 1, 1, 0.05, 1, 1, 1, 1]
     
     # Get the shape of the input tensor
     input_shape = tf.shape(pred_mask_prob)

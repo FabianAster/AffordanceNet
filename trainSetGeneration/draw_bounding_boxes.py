@@ -23,4 +23,4 @@ def draw_bounding_boxes(image_path, xml_path, output_path):
     # Save the image with bounding boxes
     cv2.imwrite(output_path, img)
 
-draw_bounding_boxes("/home/fabian/31_TrainingImages/training_set/imgs_generated/10.jpg", "/home/fabian/31_TrainingImages/training_set/xml_generated/10.xml", "./test1.png")
+draw_bounding_boxes("/home/fabian/31_TrainingImages/training_set/imgs_generated/1083.jpg", "/home/fabian/31_TrainingImages/training_set/xml_generated/1083.xml", "./test1.png")

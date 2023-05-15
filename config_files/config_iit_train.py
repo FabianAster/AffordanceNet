@@ -19,4 +19,4 @@ class ConfigIitTrain(Config):
     AFFORDANCE_LABELS = ["background", "contain", "cut", "display", "engine", "grasp", "hit", "pound", "support", "w-grasp"]
 
     EPOCHS = 4             # 25+8
-    USE_FLIPPED = True      # Add flipped images for training only
+    USE_FLIPPED = False      # Add flipped images for training only

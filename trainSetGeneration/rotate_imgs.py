@@ -1,0 +1,80 @@
+import cv2
+import os
+import xml.etree.ElementTree as ET
+import numpy as np
+import math
+
+def rotate_bounding_boxes(xml_path_src, xml_path_dest, angle, img_width, img_height):
+    tree = ET.parse(xml_path_src)
+    root = tree.getroot()
+
+    # Loop through all bounding boxes and rotate the coordinates
+    for obj in root.findall('object'):
+        bbox = obj.find('bndbox')
+        xmin = int(bbox.find('xmin').text)
+        ymin = int(bbox.find('ymin').text)
+        xmax = int(bbox.find('xmax').text)
+        ymax = int(bbox.find('ymax').text)
+
+        rotated_xmin, rotated_xmax, rotated_ymin, rotated_ymax = rotate_bounding_box(xmin, xmax, ymin, ymax, img_width, img_height, angle)
+
+        # Update bounding box coordinates in XML
+        bbox.find('xmin').text = str(int(round(rotated_xmin)))
+        bbox.find('ymin').text = str(int(round(rotated_ymin)))
+        bbox.find('xmax').text = str(int(round(rotated_xmax)))
+        bbox.find('ymax').text = str(int(round(rotated_ymax)))
+        
+    # Write the modified XML file
+    tree.write(xml_path_dest)
+
+
+def rotate_image(img_path_src, img_path_dest, angle):
+    img = cv2.imread(img_path_src)
+    (h, w) = img.shape[:2]
+    center = (w // 2, h // 2)
+    M = cv2.getRotationMatrix2D(center, angle, 1.0)
+    rotated_img = cv2.warpAffine(img, M, (w, h))
+    cv2.imwrite(img_path_dest, rotated_img)
+
+def rotate_bounding_box(x_min, x_max, y_min, y_max, image_width, image_height, angle):
+    # Calculate the center of the bounding box
+    center_x = (image_width) / 2
+    center_y = (image_height) / 2
+    # calculate offset to move venter of image to top left corner
+
+    # move all coordinates
+    # rotate
+    angle_rad = math.radians(-angle)
+    
+    # Convert the angle to radians
+    x_min -= center_x
+    x_max -= center_x
+    y_min -= center_y
+    y_max -= center_y
+
+
+    cord_1 = [x_min, y_min]
+    cord_2 = [x_min, y_max]
+    cord_3 = [x_max, y_min]
+    cord_4 = [x_max, y_max]
+
+    rotation_matrix = np.array([[math.cos(angle_rad), -math.sin(angle_rad)],
+                                [math.sin(angle_rad), math.cos(angle_rad)]])
+    
+    cord_1 = np.dot(rotation_matrix, np.array(cord_1))
+    cord_2 = np.dot(rotation_matrix, np.array(cord_2))
+    cord_3 = np.dot(rotation_matrix, np.array(cord_3))
+    cord_4 = np.dot(rotation_matrix, np.array(cord_4))
+    
+    y_max = max(cord_1[1], cord_2[1], cord_3[1], cord_4[1])
+    y_min = min(cord_1[1], cord_2[1], cord_3[1], cord_4[1])
+    x_max = max(cord_1[0], cord_2[0], cord_3[0], cord_4[0])
+    x_min = min(cord_1[0], cord_2[0], cord_3[0], cord_4[0])
+
+    x_min += center_x
+    x_max += center_x
+    y_min += center_y
+    y_max += center_y
+
+    # Return the rotated bounding box coordinates
+    return x_min, x_max, y_min, y_max

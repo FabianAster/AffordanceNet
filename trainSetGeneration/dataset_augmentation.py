@@ -17,21 +17,22 @@ def apply_transformations(counter, dir_img_src, dir_img_dest, dir_xml_src, dir_x
             num_objects = get_num_objects(xml_path_src)
 
             # Apply rotation transformation
-            rotate_image(image_path_src, image_path_dest, angle)
-            rotate_bounding_boxes(xml_path_src, xml_path_dest, angle, img_width, img_height)
-            rotate_masks(dir_mask_src, dir_mask_dest, counter, filename, angle, num_objects)
-            
-            counter+=1
+            if(rotate_bounding_boxes(counter, xml_path_src, xml_path_dest, angle, img_width, img_height) != -1):
+              rotate_image(image_path_src, image_path_dest, angle)
+              rotate_masks(dir_mask_src, dir_mask_dest, counter, filename, angle, num_objects)
+              counter+=1
+              image_path_dest = os.path.join(dir_img_dest, str(counter)+".jpg")
+              image_path_src = os.path.join(dir_img_dest, str(counter-1)+".jpg")
+              xml_path_src = os.path.join(dir_xml_dest, str(counter-1)+".xml")
+              xml_path_dest = os.path.join(dir_xml_dest, str(counter)+".xml")
+              
+              # Apply mirror transformation
+              mirror_image(image_path_src, image_path_dest)
+              mirror_xml(counter, xml_path_src, xml_path_dest, image_width)
+              mirror_masks(dir_mask_src, dir_mask_dest, counter, filename, num_objects)
+            else:
+              print("skipped")
 
-            image_path_dest = os.path.join(dir_img_dest, str(counter)+".jpg")
-            image_path_src = os.path.join(dir_img_dest, str(counter-1)+".jpg")
-            xml_path_src = os.path.join(dir_xml_dest, str(counter-1)+".xml")
-            xml_path_dest = os.path.join(dir_xml_dest, str(counter)+".xml")
-            
-            # Apply mirror transformation
-            mirror_image(image_path_src, image_path_dest)
-            mirror_xml(xml_path_src, xml_path_dest, image_width)
-            mirror_masks(dir_mask_src, dir_mask_dest, counter, filename, num_objects)
             
     return counter
 

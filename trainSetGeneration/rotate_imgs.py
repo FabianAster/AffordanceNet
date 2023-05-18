@@ -4,10 +4,13 @@ import xml.etree.ElementTree as ET
 import numpy as np
 import math
 
-def rotate_bounding_boxes(xml_path_src, xml_path_dest, angle, img_width, img_height):
+def rotate_bounding_boxes(counter, xml_path_src, xml_path_dest, angle, img_width, img_height):
     tree = ET.parse(xml_path_src)
     root = tree.getroot()
 
+    # TODO: add counter into xml file
+    root.find("filename").text = str(counter) + ".jgp"
+    
     # Loop through all bounding boxes and rotate the coordinates
     for obj in root.findall('object'):
         bbox = obj.find('bndbox')
@@ -17,6 +20,46 @@ def rotate_bounding_boxes(xml_path_src, xml_path_dest, angle, img_width, img_hei
         ymax = int(bbox.find('ymax').text)
 
         rotated_xmin, rotated_xmax, rotated_ymin, rotated_ymax = rotate_bounding_box(xmin, xmax, ymin, ymax, img_width, img_height, angle)
+
+        if (rotated_xmax < rotated_xmin):
+          print("min greater than max")
+          return -1
+
+        if (rotated_ymax < rotated_ymin):
+          print("min greater than max")
+          return -1
+
+        if (rotated_xmax < 0):
+          print("negative_value")
+          return -1
+
+        if (rotated_xmin < 0):
+          print("negative_value")
+          return -1
+
+        if (rotated_ymax < 0):
+          print("negative_value")
+          return -1
+
+        if (rotated_ymin < 0):
+          print("negative_value")
+          return -1
+
+        if (rotated_xmax > 479):
+          print("value too large")
+          return -1
+
+        if (rotated_xmin > 479):
+          print("value too large")
+          return -1
+
+        if (rotated_ymax > 479):
+          print("value too large")
+          return -1
+
+        if (rotated_ymin > 479):
+          print("value too large")
+          return -1
 
         # Update bounding box coordinates in XML
         bbox.find('xmin').text = str(int(round(rotated_xmin)))

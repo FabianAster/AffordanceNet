@@ -4,7 +4,7 @@ from os import walk
 import re
 
 if __name__ == '__main__':
-    src_dir = '/home/fabian/github/data_custom_augmented/VOCdevkit2012/VOC2012/JPEGImages'
+    src_dir = '/home/fabian/github/data/VOCdevkit2012/VOC2012/JPEGImages'
     filname_arr_with_masks = []
 
 

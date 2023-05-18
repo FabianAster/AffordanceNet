@@ -1,13 +1,17 @@
 import xml.etree.ElementTree as ET 
 import cv2
 
-def mirror_xml(source_path, destination_path, img_width):
+def mirror_xml(counter, source_path, destination_path, img_width):
     # Parse XML file
     tree = ET.parse(source_path)
     root = tree.getroot()
 
+    # update counter in xml file
+    root.find("filename").text = str(counter) + ".jgp"
+
     # Mirror bounding boxes in XML
     for obj in root.findall('object'):
+        
         bbox = obj.find('bndbox')
         xmin = int(bbox.find('xmin').text)
         xmax = int(bbox.find('xmax').text)
@@ -15,6 +19,14 @@ def mirror_xml(source_path, destination_path, img_width):
         # Mirror bounding box coordinates
         mirrored_xmin = img_width - xmax
         mirrored_xmax = img_width - xmin
+        if (mirrored_xmax < mirrored_xmin):
+          assert("min greater than max")
+
+        if (mirrored_xmax < 0):
+          assert("min greater than max")
+
+        if (mirrored_xmin < 0):
+          assert("min greater than max")
 
         # Update bounding box coordinates in XML
         bbox.find('xmin').text = str(mirrored_xmin)

@@ -1,8 +1,9 @@
 import xml.etree.ElementTree as ET 
 import cv2
 
-def mirror_xml(counter, source_path, destination_path, img_width):
+def mirror_xml(scaling_factor, counter, source_path, destination_path, img_width):
     # Parse XML file
+    img_width = img_width * scaling_factor
     tree = ET.parse(source_path)
     root = tree.getroot()
 
@@ -16,9 +17,10 @@ def mirror_xml(counter, source_path, destination_path, img_width):
         xmin = int(bbox.find('xmin').text)
         xmax = int(bbox.find('xmax').text)
 
+
         # Mirror bounding box coordinates
-        mirrored_xmin = img_width - xmax
-        mirrored_xmax = img_width - xmin
+        mirrored_xmin = (img_width - xmax)
+        mirrored_xmax = (img_width - xmin)
         if (mirrored_xmax < mirrored_xmin):
           assert("min greater than max")
 
@@ -35,8 +37,7 @@ def mirror_xml(counter, source_path, destination_path, img_width):
     # Save the modified XML to the destination path
     tree.write(destination_path)
 
-
-def mirror_image(source_path, destination_path):
+def mirror_image(scaling_factor, source_path, destination_path):
     # Read image
     img = cv2.imread(source_path)
 

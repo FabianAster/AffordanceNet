@@ -11,49 +11,6 @@ import importlib
 from PIL import Image
 
 
-# Adapt data to tf dataset
-def iit_data_to_tf_dataset():
-    for roi in roidb:
-        final_obj = {
-            'image':  roi['image'],     # imagepath
-            # empty variable for future img shape
-            'image_shape': tf.constant([0., 0.], dtype=tf.float32),
-            'objects': {
-                'bbox': tf.constant(roi['boxes'], dtype=tf.float32),
-                'label': tf.constant(roi['gt_classes'], dtype=tf.int32),
-                # keep only mask label
-                'seg_mask_inds': tf.constant(0, dtype=tf.int32),
-                'mask_path': tf.constant(np.array(['s']), dtype=tf.string),
-                'mask':  tf.constant(tf.constant(0.), dtype=tf.float32)
-            }
-        }
-        if cfg.MASK_REG:
-            # Create paths to read masks afterwards
-            num_bboxes = len(roi['boxes'])
-            im_ind = str(roi['seg_mask_inds'][0][0])
-            mask_paths = [os.path.join(cfg.DATA_MASKS_DIR_IMGS, im_ind + '_' + str(i) + '_segmask.png') for i in
-                          range(1, num_bboxes + 1)]
-            final_obj['objects']['seg_mask_inds'] = tf.constant(
-                roi['seg_mask_inds'][:, 1], dtype=tf.int32)    # keep only mask label
-            final_obj['objects']['mask_path'] = tf.constant(
-                np.array(mask_paths), dtype=tf.string)
-        yield final_obj
-
-# Load image and mask data
-
-
-def load_imgs_and_masks(obj_json):
-    if cfg.MASK_REG:
-        masks = tf.map_fn(lambda x: data_utils.read_mask(
-            x), obj_json['objects']['mask_path'], dtype=tf.uint8)
-        obj_json['objects']['mask'] = masks
-
-    # load the raw data from the file as a string and decode image
-    img = tf.io.read_file(obj_json['image'])
-    obj_json['image'] = tf.image.decode_jpeg(img, channels=3)
-    return obj_json
-
-
 if __name__ == '__main__':
     keras.backend.clear_session()
 
@@ -72,6 +29,7 @@ if __name__ == '__main__':
     imdb, roidb = data_utils.combined_roidb(
         cfg.IMDB_NAME, cfg.PROPOSAL_METHOD, cfg.USE_FLIPPED, mode="inference")
     labels = imdb.classes
+    print(labels)
     base_anchors = bbox_utils.generate_base_anchors(cfg)
 
     # Create models and load weights
@@ -99,10 +57,8 @@ if __name__ == '__main__':
     img_mask_check = tf.io.read_file("../data/cache/GTsegmask_VOC_2012_train_images/3736_1_segmask.png")
     tensor_img_mask = tf.io.decode_image(img_mask_check, channels=3, dtype=tf.dtypes.float32)
     np.set_printoptions(threshold=sys.maxsize) 
-    print(tensor_img_mask)
 
     filenames = next(walk("./testRobotImages"), (None, None, []))[2]  # [] if no file
-    print(filenames)
     
     for filename in filenames:
         img = tf.io.read_file("./testRobotImages/"+filename)

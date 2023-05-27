@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import numpy as np
 import math
 
-def rotate_bounding_boxes(counter, xml_path_src, xml_path_dest, angle, img_width, img_height):
+def rotate_bounding_boxes(scaling_factor, counter, xml_path_src, xml_path_dest, angle, img_width, img_height):
     tree = ET.parse(xml_path_src)
     root = tree.getroot()
 
@@ -14,10 +14,10 @@ def rotate_bounding_boxes(counter, xml_path_src, xml_path_dest, angle, img_width
     # Loop through all bounding boxes and rotate the coordinates
     for obj in root.findall('object'):
         bbox = obj.find('bndbox')
-        xmin = int(bbox.find('xmin').text)
-        ymin = int(bbox.find('ymin').text)
-        xmax = int(bbox.find('xmax').text)
-        ymax = int(bbox.find('ymax').text)
+        xmin = int(bbox.find('xmin').text) * scaling_factor
+        ymin = int(bbox.find('ymin').text) * scaling_factor
+        xmax = int(bbox.find('xmax').text) * scaling_factor
+        ymax = int(bbox.find('ymax').text) * scaling_factor
 
         rotated_xmin, rotated_xmax, rotated_ymin, rotated_ymax = rotate_bounding_box(xmin, xmax, ymin, ymax, img_width, img_height, angle)
 
@@ -45,19 +45,19 @@ def rotate_bounding_boxes(counter, xml_path_src, xml_path_dest, angle, img_width
           print("negative_value")
           return -1
 
-        if (rotated_xmax > 479):
+        if (rotated_xmax > 479 * scaling_factor):
           print("value too large")
           return -1
 
-        if (rotated_xmin > 479):
+        if (rotated_xmin > 479 * scaling_factor):
           print("value too large")
           return -1
 
-        if (rotated_ymax > 479):
+        if (rotated_ymax > 479 * scaling_factor):
           print("value too large")
           return -1
 
-        if (rotated_ymin > 479):
+        if (rotated_ymin > 479 * scaling_factor):
           print("value too large")
           return -1
 
@@ -70,9 +70,18 @@ def rotate_bounding_boxes(counter, xml_path_src, xml_path_dest, angle, img_width
     # Write the modified XML file
     tree.write(xml_path_dest)
 
+def scale_up_image(input_img, scale_factor = 3):
+    width = input_img.shape[1]
+    height = input_img.shape[0]
+    new_width = int(width * scale_factor)
+    new_height = int(height * scale_factor)
+    
+    # Upscale the image using cv2.resize with the nearest neighbor interpolation
+    return cv2.resize(input_img, (new_width, new_height), interpolation=cv2.INTER_NEAREST)
 
-def rotate_image(img_path_src, img_path_dest, angle):
+def rotate_image(scaling_factor, img_path_src, img_path_dest, angle):
     img = cv2.imread(img_path_src)
+    img = scale_up_image(img, scale_factor=scaling_factor)
     (h, w) = img.shape[:2]
     center = (w // 2, h // 2)
     M = cv2.getRotationMatrix2D(center, angle, 1.0)

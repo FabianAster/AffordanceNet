@@ -59,7 +59,7 @@ if __name__ == '__main__':
     args = io_utils.handle_args()
     # print('Config file:', args.config_file)
     config = importlib.import_module('config_files.'+args.config_file)
-    cfg = config.ConfigIitTrain()
+    cfg = config.ConfigUmdTrain()
 
     io_utils.is_valid_backbone(cfg.BACKBONE)
 

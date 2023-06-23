@@ -1,0 +1,13 @@
+AP for bowl = 0.9983
+AP for tvm = 0.9978
+AP for pan = 0.9993
+AP for hammer = 0.9829
+AP for knife = 1.0000
+AP for cup = 1.0000
+AP for drill = 0.9998
+AP for racket = 0.9989
+AP for spatula = 1.0000
+AP for bottle = 0.0000
+mAP: 0.8976998124678748
+
+grasp = 0.8110

@@ -20,7 +20,7 @@ class ConfigUmdTrain(Config):
     AFFORDANCE_LABELS = ["background", "grasp", "cut", "scoop", "contain", "pound", "support", "w-grasp"]
 
     EPOCHS = 10
-    USE_FLIPPED = True      # Add flipped images for training only
+    USE_FLIPPED = False      # Add flipped images for training only
     TRAIN_ROIS_PER_IMAGE = 36
     ROI_POSITIVE_RATIO = 0.25
 

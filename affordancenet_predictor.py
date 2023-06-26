@@ -142,6 +142,7 @@ if __name__ == '__main__':
 
         # Visualize results
         if cfg.VISUALIZE:
+            print(img.shape)
             img = tf.squeeze(img, axis=0)
             pred_bboxes = tf.squeeze(pred_bboxes, axis=0)
             pred_labels = tf.squeeze(pred_labels, axis=0)

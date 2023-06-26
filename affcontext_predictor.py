@@ -52,7 +52,7 @@ if __name__ == '__main__':
     args = io_utils.handle_args()
     # print('Config file:', args.config_file)
     config = importlib.import_module('config_files.' + args.config_file)
-    cfg = config.ConfigIitTest()
+    cfg = config.ConfigUmdTest()
 
     # import backbone
     if cfg.BACKBONE == "mobilenet_v2":
@@ -111,13 +111,13 @@ if __name__ == '__main__':
     for i, image_data in enumerate(test_feed):
         if i == total_items:
             break
+        img, image_shape, true_bboxes, true_labels, true_masks, mask_ids = image_data
         print('Image', i)
         print(type(img))
         print("after")
-        img, image_shape, true_bboxes, true_labels, true_masks, mask_ids = image_data
         pred_bboxes, pred_labels, pred_scores, pred_masks = aff_context_model.predict([img], verbose=1)
 
-        image_shape = tf.squeeze(image_shape, axis=0).numpy().astype(np.int)
+        image_shape = tf.squeeze(image_shape, axis=0).numpy().astype(int)
 
         # Evaluate results
         if cfg.EVALUATE:
@@ -146,18 +146,20 @@ if __name__ == '__main__':
 
         # Visualize results
         if cfg.VISUALIZE:
-            img = tf.squeeze(img, axis=0)
-            pred_bboxes = tf.squeeze(pred_bboxes, axis=0)
-            pred_labels = tf.squeeze(pred_labels, axis=0)
-            pred_scores = tf.squeeze(pred_scores, axis=0)
-            true_bboxes = tf.squeeze(true_bboxes, axis=0)
-            true_labels = tf.squeeze(true_labels, axis=0)
+            print(img.shape)
+            img = tf.squeeze(tf.expand_dims(img, axis=0), axis=0)
+            pred_bboxes = tf.squeeze(tf.expand_dims(pred_bboxes, axis=0), axis=0)
+            pred_labels = tf.squeeze(tf.expand_dims(pred_labels, axis=0), axis=0)
+            pred_scores = tf.squeeze(tf.expand_dims(pred_scores, axis=0), axis=0)
+            true_bboxes = tf.squeeze(tf.expand_dims(true_bboxes, axis=0), axis=0)
+            true_labels = tf.squeeze(tf.expand_dims(true_labels, axis=0), axis=0)
 
-            true_masks = tf.squeeze(true_masks, axis=0)
-            mask_ids = tf.squeeze(mask_ids, axis=0)
-            pred_masks = tf.squeeze(pred_masks, axis=0)
-            drawing_utils.draw_predictions_with_masks(img, true_bboxes, true_labels, pred_bboxes, pred_labels, pred_scores,
-                                           labels, cfg.BATCH_SIZE, cfg.MASK_REG, true_masks, mask_ids, pred_masks, cfg.AFFORDANCE_LABELS, 'umd')
+            true_masks = tf.squeeze(tf.expand_dims(true_masks, axis=0), axis=0)
+            mask_ids = tf.squeeze(tf.expand_dims(mask_ids, axis=0), axis=0)
+            pred_masks = tf.squeeze(tf.expand_dims(pred_masks, axis=0), axis=0)
+
+            drawing_utils.draw_predictions_with_masks(img, pred_bboxes, pred_labels, pred_scores,
+                                           labels, cfg.BATCH_SIZE, cfg.MASK_REG, pred_masks, cfg.AFFORDANCE_LABELS, 'umd')
 
     # Calculate final FwB score
     if cfg.EVALUATE:

@@ -148,6 +148,13 @@ if __name__ == '__main__':
             pred_labels = tf.squeeze(pred_labels, axis=0)
             pred_scores = tf.squeeze(pred_scores, axis=0)
             pred_masks = tf.squeeze(pred_masks, axis=0)
+            print("init print stating")
+            print(img.shape)
+            print(pred_bboxes.shape)
+            print(pred_labels.shape)
+            print(pred_scores.shape)
+            print(pred_masks.shape)
+            print("init print finished")
 
             drawing_utils.draw_predictions_with_masks(img, pred_bboxes, pred_labels, pred_scores,
                                            labels, cfg.BATCH_SIZE, cfg.MASK_REG, pred_masks, cfg.AFFORDANCE_LABELS, 'iit')

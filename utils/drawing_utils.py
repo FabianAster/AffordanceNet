@@ -121,16 +121,6 @@ def convert_mask_to_original_ids_manual(mask, original_uni_ids):
 
     out_mask = np.full(mask.shape, 0, 'float32')
 
-    print("issue shape")
-    print(mask.shape)
-    if(mask.ndim != 2):
-        print("problem")
-        print(mask.shape)
-        mask = mask[:,:,0]
-        # mask = np.squeeze(mask, axis = 0)
-        print("after convert")
-        print(mask.shape)
-    
     mh, mw = mask.shape
     for i in range(mh - 1):
         for j in range(mw - 1):
@@ -185,13 +175,11 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
 
         # show corresponding masks
         if use_masks:
-            if (pred_masks.shape[0] <= index):
-              continue;
             mask = pred_masks[index]
             # Calculate max index for each position in the mask -> calculate affordance label
             mask_np = mask.numpy()
             traces = []
-            for i in range(0,10):
+            for i in [0,5]:
               line1 = mask_np[:, :, i]
 
               trace1 = go.Scatter(
@@ -218,6 +206,7 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
 
             # sort before_uni_ids and reset [0, 1, 7] to [0, 1, 2]
             original_affordance_labels.sort()
+            print(np.take(aff_labels, original_affordance_labels))
             mask = reset_mask_ids(mask, original_affordance_labels)
 
             # resize mask wrt bbox size and convert to original affordance label ids
@@ -231,18 +220,6 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
             # add mask values to current mask but preserving the maximum index -> 0 less importance, 10 max importance
             x1, x2, y1, y2 = int(x1.numpy()[0]), int(x2.numpy()[0]), int(y1.numpy()[0]), int(y2.numpy()[0])
             provisional_mask = curr_mask[y1:y2, x1:x2]
-            print("issue shape")
-            print(mask.shape)
-            print("provisional shape")
-            print(provisional_mask.shape)
-            if(mask.ndim != 2):
-                print("problem")
-                print(mask.shape)
-                mask = mask[:,:,0]
-                # mask = np.squeeze(mask, axis = 0)
-                print("after convert")
-                print(mask.shape)
-            
             curr_mask[y1:y2, x1:x2] = np.maximum(mask, provisional_mask)  # assign to output mask
 
             # for aff_label in affordance_labels:
@@ -258,11 +235,9 @@ def draw_bboxes_with_labels_and_masks(img, bboxes, label_indices, probs, labels,
 
     if use_masks:
         curr_mask = curr_mask.astype('uint8')
-        label_colours = label_colors_iit
+        label_colours = label_colors_iit if dataset == 'iit' else label_colors_umd
         color_curr_mask = label_colours.take(curr_mask, axis=0)
-        print("color shape")
         color_curr_mask = Image.fromarray(color_curr_mask.astype(np.uint8), mode='RGBA')
-        print(color_curr_mask.shape)
         image.paste(color_curr_mask, (0,0), color_curr_mask)
 
     plt.figure()

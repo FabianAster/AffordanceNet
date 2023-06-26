@@ -19,7 +19,7 @@ class ConfigUmdTest(Config):
     AFFORDANCE_LABELS = ["background", "grasp", "cut", "scoop", "contain", "pound", "support", "w-grasp"]
 
     EVALUATE = True
-    VISUALIZE = False
+    VISUALIZE = True
 
     OBJ_TO_ATTR = tf.constant([
         [0, 0, 0, 0, 0, 0, 0],

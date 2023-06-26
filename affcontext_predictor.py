@@ -146,17 +146,17 @@ if __name__ == '__main__':
 
         # Visualize results
         if cfg.VISUALIZE:
+            print("init print stating")
             print(img.shape)
-            img = tf.squeeze(tf.expand_dims(img, axis=0), axis=0)
-            pred_bboxes = tf.squeeze(tf.expand_dims(pred_bboxes, axis=0), axis=0)
-            pred_labels = tf.squeeze(tf.expand_dims(pred_labels, axis=0), axis=0)
-            pred_scores = tf.squeeze(tf.expand_dims(pred_scores, axis=0), axis=0)
-            true_bboxes = tf.squeeze(tf.expand_dims(true_bboxes, axis=0), axis=0)
-            true_labels = tf.squeeze(tf.expand_dims(true_labels, axis=0), axis=0)
+            print(pred_bboxes.shape)
+            print(pred_labels.shape)
+            print(pred_scores.shape)
 
-            true_masks = tf.squeeze(tf.expand_dims(true_masks, axis=0), axis=0)
-            mask_ids = tf.squeeze(tf.expand_dims(mask_ids, axis=0), axis=0)
-            pred_masks = tf.squeeze(tf.expand_dims(pred_masks, axis=0), axis=0)
+            print(pred_masks.shape)
+            print("before trans pred_masks")
+            pred_masks = tf.squeeze(pred_masks, axis=0)
+            print(pred_masks.shape)
+            print("init print finished")
 
             drawing_utils.draw_predictions_with_masks(img, pred_bboxes, pred_labels, pred_scores,
                                            labels, cfg.BATCH_SIZE, cfg.MASK_REG, pred_masks, cfg.AFFORDANCE_LABELS, 'umd')

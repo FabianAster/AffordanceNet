@@ -7,7 +7,5 @@ AP for cup = 1.0000
 AP for drill = 0.9998
 AP for racket = 0.9989
 AP for spatula = 1.0000
-AP for bottle = 0.0000
-mAP: 0.8976998124678748
 
 grasp = 0.8110

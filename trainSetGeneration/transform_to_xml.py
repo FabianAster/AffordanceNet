@@ -69,8 +69,8 @@ def transform_to_xml(filename, src_dir, dest_dir):
     
   
 if __name__ == '__main__':
-    src_dir = '/home/fabian/31_TrainingImages/training_set/labels'
-    dest_dir = '/home/fabian/31_TrainingImages/training_set/xml'
+    src_dir = '/home/fabian/31_TrainingImages/test_set/labels'
+    dest_dir = '/home/fabian/31_TrainingImages/test_set/xml'
 
 
     filenames = next(walk(src_dir), (None, None, []))[2]  # [] if no file

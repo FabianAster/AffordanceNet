@@ -3,8 +3,8 @@ import glob
 from os import walk
 import shutil
 
-src_dir = "/home/fabian/31_TrainingImages/training_set/imgs"
-dest_dir = "/home/fabian/31_TrainingImages/training_set/masks"
+src_dir = "/home/fabian/31_TrainingImages/test_set/imgs"
+dest_dir = "/home/fabian/31_TrainingImages/test_set/masks"
 
 
 filenames = next(walk(src_dir), (None, None, []))[2]  # [] if no file

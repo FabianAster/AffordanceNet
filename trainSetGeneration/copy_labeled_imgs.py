@@ -4,8 +4,8 @@ from os import walk
 import re
 
 if __name__ == '__main__':
-    src_dir = '/home/fabian/31_TrainingImages/training_set/imgs'
-    dest_dir = '/home/fabian/31_TrainingImages/data/VOCdevkit2012/VOC2012/JPEGImages'
+    src_dir = '/home/fabian/31_TrainingImages/test_set/imgs'
+    dest_dir = '/home/fabian/31_TrainingImages/test_set/imgs_clean'
     filname_arr_with_masks = []
 
 

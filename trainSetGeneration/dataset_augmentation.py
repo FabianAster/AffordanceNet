@@ -67,14 +67,14 @@ def rotate_masks(scaling_factor, src_dir, dest_dir, counter, filename, angle, nu
         rotate_image(scaling_factor, mask_src_dir, mask_dest_dir, angle)
 
 # Example usage
-imgs_src = '/home/fabian/31_TrainingImages/test_set/imgs_clean'
-imgs_dest = '/home/fabian/31_TrainingImages/test_set/imgs_generated'
+imgs_src = '/home/fabian/31_TrainingImages/training_set/imgs_clean'
+imgs_dest = '/home/fabian/31_TrainingImages/training_set/imgs_generated'
 
-xml_src = '/home/fabian/31_TrainingImages/test_set/xml'
-xml_dest = '/home/fabian/31_TrainingImages/test_set/xml_generated'
+xml_src = '/home/fabian/31_TrainingImages/training_set/xml'
+xml_dest = '/home/fabian/31_TrainingImages/training_set/xml_generated'
 
-mask_src = '/home/fabian/31_TrainingImages/test_set/masks'
-mask_dest = '/home/fabian/31_TrainingImages/test_set/masks_generated'
+mask_src = '/home/fabian/31_TrainingImages/training_set/masks'
+mask_dest = '/home/fabian/31_TrainingImages/training_set/masks_generated'
 
 image_width = 480
 image_height = 480
@@ -82,7 +82,7 @@ image_height = 480
 
 counter = 0
 
-for angle in range(0, 360, 20):
+for angle in range(0, 360, 15):
     print(str(angle) + " done")
     counter = apply_transformations(1, counter, imgs_src, imgs_dest, xml_src, xml_dest, mask_src, mask_dest, angle, image_height, image_width)
     counter+=1

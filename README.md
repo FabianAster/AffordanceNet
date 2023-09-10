@@ -123,3 +123,23 @@ python3 affcontext_trainer.py --config_file config_umd_train
 
 ### Acknowledgements
 This repo used source code from [AffordanceNet](https://github.com/nqanh/affordance-net) and [Faster-RCNN](https://github.com/FurkanOM/tf-faster-rcnn)
+
+
+# Extension of this Fork: 
+
+- custom dataset that can be used with both the umd training function, and the iit trainings function.
+- added weights to the affordance_net
+  
+## Custom dataset
+
+The custom dataset is accessible over this link [custom dataset]().
+To train the networks using this dataset simply execute the trainer scripts like mentioned in the section above.
+
+The iit config always has to be used for the affordancenet and the umd config for the AffContext.
+Still the custom dataset will be used when downloading it and moving it to the dataset directory.
+
+## Added weights to the affordance_net
+
+To train the affordanceNet using the custom weights, use the affordance_weights branch, and run here the normal
+affordance_net iit trainer function using the iit config.
+This breaks the possability to train the affcontext, therefore to train the affcontext use the branch umd_training works.

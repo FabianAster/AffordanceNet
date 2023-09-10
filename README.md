@@ -132,7 +132,7 @@ This repo used source code from [AffordanceNet](https://github.com/nqanh/afforda
   
 ## Custom dataset
 
-The custom dataset is accessible over this link [custom dataset]().
+The custom dataset is accessible over this link [custom dataset](https://drive.google.com/drive/folders/1KypiJbjo78BbSEd58IZ-HV3U8WwsHSeO?usp=sharing).
 To train the networks using this dataset simply execute the trainer scripts like mentioned in the section above.
 
 The iit config always has to be used for the affordancenet and the umd config for the AffContext.
